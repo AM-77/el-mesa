@@ -20,7 +20,8 @@ export default class Room extends Component {
             message: "",
             members: [],
             error: "",
-            redirect: false
+            redirect: false,
+            writters: []
         }
         socket = io(ENDPOINT)
     }
@@ -39,6 +40,10 @@ export default class Room extends Component {
             this.setState({ messages: [...this.state.messages, { user, text }] })
             if (members)
                 this.setState({ members })
+        })
+
+        socket.on("writters", ({ writters }) => {
+            this.setState({ writters })
         })
 
         socket.emit("get-rooms")
@@ -62,10 +67,18 @@ export default class Room extends Component {
         }
     }
 
+    isWritting = () => {
+        socket.emit("isWritting", { room: this.state.room, name: this.state.name }, () => { })
+    }
+
+    stoppedWritting = () => {
+        socket.emit("stoppedWritting", { room: this.state.room, name: this.state.name }, () => { })
+    }
+
     logout = () => {
         socket.disconnect()
         socket.off()
-        this.setState({ redirect: true, error: "Logged Out" })
+        this.setState({ redirect: true })
     }
 
     render() {
@@ -87,11 +100,27 @@ export default class Room extends Component {
                         <div className="messages">
                             <Messages me={this.state.name} messages={this.state.messages} />
                         </div>
+                        {
+                            this.state.writters.length > 0 && this.state.writters.filter(name => this.state.name !== name).length !== 0
+                                ?
+                                this.state.writters.length > 1 ?
+                                    <div className="writters">
+                                        <p>{this.state.writters.map((writter, index) => <span key={index}>{writter} </span>)} are writting... </p>
+                                    </div>
+                                    :
+                                    <div className="writters">
+                                        <p>{this.state.writters.map((writter, index) => <span key={index}>{writter}</span>)} is writting... </p>
+                                    </div>
+                                :
+                                null
+                        }
                         <div className="sending-box">
                             <input type="text" value={this.state.message}
                                 placeholder="Your Message"
                                 onChange={(e) => this.messageOnChange(e)}
-                                onKeyPress={(e) => this.messageOnKeyPress(e)} />
+                                onKeyPress={(e) => this.messageOnKeyPress(e)}
+                                onFocus={this.isWritting}
+                                onBlur={this.stoppedWritting} />
                             <button onClick={this.send}>send</button>
                         </div>
                     </div>

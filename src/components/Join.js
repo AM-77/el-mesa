@@ -17,6 +17,9 @@ export default class Join extends Component {
             room: "",
             rooms: []
         }
+    }
+
+    componentDidMount() {
         socket = io(ENDPOINT)
         socket.emit("get-rooms")
         socket.on("rooms", ({ rooms }) => this.setState({ rooms }))
@@ -25,22 +28,21 @@ export default class Join extends Component {
     render() {
         return (
             <div className="join-container">
-                {
-                    this.props.location.message
-                        ?
-                        <div className="error-box">
-                            <p>{this.props.location.message}</p>
-                        </div>
-                        :
-                        null
-                }
-
                 <NavBar is_join />
                 <div className="rooms-box">
                     <Rooms rooms={this.state.rooms} />
                 </div>
                 <div className="join-box">
                     <h2>Join A Chat Room</h2>
+                    {
+                        this.props.location.message
+                            ?
+                            <div className="error-box">
+                                <p>{this.props.location.message}</p>
+                            </div>
+                            :
+                            null
+                    }
                     <input type="text"
                         placeholder="Your Name"
                         onChange={e => this.setState({ name: e.target.value })} />
