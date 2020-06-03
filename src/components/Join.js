@@ -5,7 +5,6 @@ import io from "socket.io-client"
 import NavBar from "./NavBar"
 import Rooms from "./Rooms"
 
-let socket
 const ENDPOINT = "localhost:3300"
 
 export default class Join extends Component {
@@ -20,39 +19,43 @@ export default class Join extends Component {
     }
 
     componentDidMount() {
-        socket = io(ENDPOINT)
-        socket.emit("get-rooms")
-        socket.on("rooms", ({ rooms }) => this.setState({ rooms }))
+        this.socket = io(ENDPOINT)
+        this.socket.emit("get-rooms")
+        this.socket.on("rooms", ({ rooms }) => this.setState({ rooms }))
+    }
+
+    selectRoom = room => {
+        this.setState({room})
     }
 
     render() {
+        const { room, rooms, name } = this.state
+        const { location: { message } } = this.props
+
         return (
             <div className="join-container">
-                <NavBar is_join />
-                <div className="rooms-box">
-                    <Rooms rooms={this.state.rooms} />
-                </div>
+                <Rooms rooms={rooms} selectRoom={this.selectRoom} />
                 <div className="join-box">
-                    <h2>Join A Chat Room</h2>
-                    {
-                        this.props.location.message
-                            ?
-                            <div className="error-box">
-                                <p>{this.props.location.message}</p>
-                            </div>
-                            :
-                            null
-                    }
-                    <input type="text"
-                        placeholder="Your Name"
-                        onChange={e => this.setState({ name: e.target.value })} />
-                    <input type="text"
-                        placeholder="The Room's Name"
-                        onChange={e => this.setState({ room: e.target.value })} />
-                    <Link onClick={e => (!this.state.room || !this.state.name) ? e.preventDefault() : null}
-                        to={`/${this.state.room}/${this.state.name}`}>
-                        <button>join</button>
-                    </Link>
+                    <NavBar join={true} />
+                    <div className="join-form">
+                        <h2>Join a chat room</h2>
+                        {
+                            message && <div className="error-message">
+                                <p>{ message }</p>
+                            </div>  
+                        }
+                        <input type="text"
+                            placeholder="Your Name"
+                            onChange={e => this.setState({ name: e.target.value })} />
+                        <input type="text"
+                            placeholder="The Room's Name"
+                            onChange={e => this.setState({ room: e.target.value })}
+                            value={ room } />
+                        <Link onClick={e => (!room || !name) ? e.preventDefault() : null}
+                            to={`/${ room }/${ name }`}>
+                            <button>join</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         )
