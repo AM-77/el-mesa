@@ -14,6 +14,8 @@ app.use(router)
 const server = http.createServer(app)
 const io = socketio(server)
 
+let writters = {}
+
 io.on("connection", (socket) => {
 
     socket.on("join", ({ name, room }, callback) => {
@@ -23,6 +25,7 @@ io.on("connection", (socket) => {
         socket.emit("message", { user: "admin", text: `${user.name} welcome to ${user.room}`, members })
         socket.broadcast.to(user.room).emit("message", { user: "admin", text: `${user.name} has joined the conversation.`, members })
         socket.join(user.room)
+        writters[user.room] = []
         callback()
     })
 
@@ -34,6 +37,16 @@ io.on("connection", (socket) => {
 
     socket.on("get-rooms", () => {
         io.emit("rooms", { rooms: get_rooms() })
+    })
+
+    socket.on("isWritting", ({ name, room }) => {
+        writters[room].push(name)
+        io.to(room).emit("writters", { writters: writters[room] })
+    })
+
+    socket.on("stoppedWritting", ({ name, room }) => {
+        writters[room] = writters[room].filter(n => n != name)
+        io.to(room).emit("writters", { writters: writters[room] })
     })
 
     socket.on("disconnect", () => {
