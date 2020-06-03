@@ -1,5 +1,5 @@
 {
-  "short_name": "El Kara",
+  "short_name": "El Mesa",
   "name": "A Chat Application",
   "icons": [
     {
@@ -8,18 +8,18 @@
       "type": "image/png"
     },
     {
-      "src": "kara-logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "kara-logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#121212",
+  "background_color": "#f1f2f3"
 }
