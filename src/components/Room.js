@@ -81,49 +81,55 @@ export default class Room extends Component {
     }
 
     render() {
-        if (this.state.redirect)
+
+        const { redirect, error, name, room, messages, members, writters, message } = this.state
+
+        if (redirect)
             return <Redirect to={{
                 pathname: "/",
-                message: this.state.error
+                message: error
             }} />
         else
             return (
                 <div className="room-container">
-                    <div className="nav-bar">
-                        <NavBar logout={this.logout}/>
-                    </div>
-                    <div className="chat-members">
-                        <Members me={this.state.name} members={this.state.members} room={this.state.room} />
-                    </div>
-                    <div className="chat-messages">
-                        <div className="messages">
-                            <Messages me={this.state.name} messages={this.state.messages} />
-                        </div>
-                        {
-                            this.state.writters.length > 0 && this.state.writters.filter(name => this.state.name !== name).length !== 0
-                                ?
-                                this.state.writters.length > 1 ?
-                                    <div className="writters">
-                                        <p>{this.state.writters.map((writter, index) => <span key={index}>{writter} </span>)} are writting... </p>
-                                    </div>
+                    <div className="room-sidebar"><Members me={name} members={members} room={room} /></div>
+                    <div className="room-content">
+                        <NavBar logout={this.logout} room={room}/>
+                        <div className="chat-messages">
+                            <div className="messages"><Messages me={name} messages={messages} /></div>
+                            {
+                                writters.length > 0 && writters.filter(name => name !== name).length !== 0
+                                    ?
+                                    writters.length > 1 ?
+                                        <div className="writters">
+                                            <p>{writters.map((writter, index) => <span key={index}>{writter} </span>)} are writting... </p>
+                                        </div>
+                                        :
+                                        <div className="writters">
+                                            <p>{writters.map((writter, index) => <span key={index}>{writter}</span>)} is writting... </p>
+                                        </div>
                                     :
-                                    <div className="writters">
-                                        <p>{this.state.writters.map((writter, index) => <span key={index}>{writter}</span>)} is writting... </p>
-                                    </div>
-                                :
-                                null
-                        }
-                        <div className="sending-box">
-                            <input type="text" value={this.state.message}
-                                placeholder="Your Message"
-                                onChange={(e) => this.messageOnChange(e)}
-                                onKeyPress={(e) => this.messageOnKeyPress(e)}
-                                onFocus={this.isWritting}
-                                onBlur={this.stoppedWritting} />
-                            <button onClick={this.send}>send</button>
+                                    null
+                            }
+                            <div className="sending-box">
+                                <input type="text" value={message}
+                                    placeholder="Your Message"
+                                    onChange={(e) => this.messageOnChange(e)}
+                                    onKeyPress={(e) => this.messageOnKeyPress(e)}
+                                    onFocus={this.isWritting}
+                                    onBlur={this.stoppedWritting} />
+                                <button onClick={this.send}>send</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             )
     }
 }
+
+
+// {
+//     ( writters.length > 0 && writters.filter(name => name !== name).length !== 0 ) && <div className="writters">
+//         <p>{ writters.map((writter, index) => <span key={index}>{writter}</span>) }{ writters.length > 1 ? 'are' : 'is' } writting... </p>
+//     </div>
+// }
