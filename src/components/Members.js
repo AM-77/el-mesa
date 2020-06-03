@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Members extends Component {
     render() {
-        const { room, members, me } = this.props
+        const { members, me } = this.props
         return (
             <div className="members-container">
                 <h2 className="title">The Members</h2>
