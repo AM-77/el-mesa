@@ -7,7 +7,7 @@ import Messages from "./Messages"
 import Members from "./Members"
 
 const ENDPOINT = process.env.ENDPOINT || "localhost:3300"
-let socket
+
 
 export default class Room extends Component {
 
@@ -23,30 +23,29 @@ export default class Room extends Component {
             redirect: false,
             writters: []
         }
-        socket = io(ENDPOINT)
+        this.socket = io(ENDPOINT)
     }
 
     componentDidMount() {
-        let name = this.props.match.params.name
-        let room = this.props.match.params.room
+        const { name, room } = this.props.match.params
         this.setState({ name, room })
 
-        socket.emit("join", { name, room }, (error) => {
+        this.socket.emit("join", { name, room }, (error) => {
             if (error)
                 this.setState({ redirect: true, error })
         })
 
-        socket.on("message", ({ user, text, members }) => {
+        this.socket.on("message", ({ user, text, members }) => {
             this.setState({ messages: [...this.state.messages, { user, text }] })
             if (members)
                 this.setState({ members })
         })
 
-        socket.on("writters", ({ writters }) => {
+        this.socket.on("writters", ({ writters }) => {
             this.setState({ writters })
         })
 
-        socket.emit("get-rooms")
+        this.socket.emit("get-rooms")
     }
 
     messageOnChange = (e) => {
@@ -60,24 +59,24 @@ export default class Room extends Component {
     }
 
     send = () => {
-        let message = this.state.message
+        let { message } = this.state
         if (message !== "") {
             this.setState({ message: "" })
-            socket.emit("send-message", message, () => { })
+            this.socket.emit("send-message", message, () => { })
         }
     }
 
     isWritting = () => {
-        socket.emit("isWritting", { room: this.state.room, name: this.state.name }, () => { })
+        this.socket.emit("isWritting", { room: this.state.room, name: this.state.name }, () => { })
     }
 
     stoppedWritting = () => {
-        socket.emit("stoppedWritting", { room: this.state.room, name: this.state.name }, () => { })
+        this.socket.emit("stoppedWritting", { room: this.state.room, name: this.state.name }, () => { })
     }
 
     logout = () => {
-        socket.disconnect()
-        socket.off()
+        this.socket.disconnect()
+        this.socket.off()
         this.setState({ redirect: true })
     }
 
@@ -91,10 +90,10 @@ export default class Room extends Component {
             return (
                 <div className="room-container">
                     <div className="nav-bar">
-                        <NavBar />
+                        <NavBar logout={this.logout}/>
                     </div>
                     <div className="chat-members">
-                        <Members me={this.state.name} members={this.state.members} room={this.state.room} logout={this.logout} />
+                        <Members me={this.state.name} members={this.state.members} room={this.state.room} />
                     </div>
                     <div className="chat-messages">
                         <div className="messages">
