@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
     "emoji-mart": "^2.11.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
