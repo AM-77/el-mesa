@@ -5,7 +5,7 @@ export default class Writters extends Component {
     const { writters, name } = this.props
     return (
       <div className="writters">
-          { ( writters.length > 0 && writters.filter(writter => writter !== name).length !== 0 ) && <p>{ writters.map((writter, index) => <span key={index}>{writter}</span>) }{ writters.length > 1 ? 'are' : 'is' } writting... </p> }
+          { ( writters.length > 0 && writters.filter(writter => writter !== name).length !== 0 ) && <p>{ writters.map((writter, index) => <span key={index}>{writter}</span>) } { writters.length > 1 ? 'are' : 'is' } writting <span className="three-dots"><span></span><span></span><span></span></span> </p> }
       </div>
     )
   }
