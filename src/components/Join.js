@@ -5,7 +5,7 @@ import io from "socket.io-client"
 import NavBar from "./NavBar"
 import Rooms from "./Rooms"
 
-const ENDPOINT = "localhost:3300"
+const ENDPOINT = process.env.ENDPOINT || "localhost:3300"
 
 export default class Join extends Component {
 
