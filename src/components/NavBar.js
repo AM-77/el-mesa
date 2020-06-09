@@ -6,6 +6,11 @@ export default class NavBar extends Component {
         const { logout, join, room } = this.props
         return (
             <div className={`nav-bar-container ${join ? 'join': 'room'}`}>
+                <div className="nav-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <div className="logo-wrapper">
                     <div className="logo-image"><img src={logo} alt="The logo" /></div>
                     <h1 className="logo-title">{room ? `${room}`: 'El Mesa'}</h1>
