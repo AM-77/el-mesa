@@ -2,11 +2,12 @@ import React, { Component } from "react"
 import logo from '../assets/logo.png'
 
 export default class NavBar extends Component {
+
     render() {
-        const { logout, join, room } = this.props
+        const { logout, join, room, toggleNabBar, isOpen } = this.props
         return (
             <div className={`nav-bar-container ${join ? 'join': 'room'}`}>
-                <div className="nav-btn">
+                <div onClick={toggleNabBar} className={`nav-btn ${isOpen && 'open'}`}>
                     <span></span>
                     <span></span>
                     <span></span>
