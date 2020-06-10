@@ -14,7 +14,8 @@ export default class Join extends Component {
         this.state = {
             name: "",
             room: "",
-            rooms: []
+            rooms: [],
+            isOpen: false
         }
     }
 
@@ -28,15 +29,17 @@ export default class Join extends Component {
         this.setState({room})
     }
 
+    toggleNabBar = () => this.setState((state)=>({isOpen: !state.isOpen}))
+
     render() {
-        const { room, rooms, name } = this.state
+        const { room, rooms, name, isOpen } = this.state
         const { location: { message } } = this.props
 
         return (
             <div className="join-container">
-                <Rooms rooms={rooms} selectRoom={this.selectRoom} />
+                <Rooms rooms={rooms} selectRoom={this.selectRoom} isOpen={isOpen} />
                 <div className="join-box">
-                    <NavBar join={true} />
+                    <NavBar join={true} isOpen={isOpen} toggleNabBar={this.toggleNabBar}/>
                     <div className="join-form">
                         <h2>Join a chat room</h2>
                         {
