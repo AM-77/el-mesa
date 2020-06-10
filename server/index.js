@@ -22,8 +22,8 @@ io.on("connection", (socket) => {
         let { user, error } = add_user({ id: socket.id, name, room })
         let members = get_users_from_room(room)
         if (error) return callback(error)
-        socket.emit("message", { user: "admin", text: `${user.name} welcome to ${user.room}`, members })
-        socket.broadcast.to(user.room).emit("message", { user: "admin", text: `${user.name} has joined the conversation.`, members })
+        socket.emit("message", { user: "admin", text: `'${user.name}' welcome to '${user.room}'`, members })
+        socket.broadcast.to(user.room).emit("message", { user: "admin", text: `'${user.name}' has joined the conversation.`, members })
         socket.join(user.room)
         writters[user.room] = []
         callback()
@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
         let user = remove_user(socket.id)
         if (user) {
             let members = get_users_from_room(user.room)
-            io.to(user.room).emit("message", { user: "admin", text: `${user.name} has left the conversation.`, members })
+            io.to(user.room).emit("message", { user: "admin", text: `'${user.name}' has left the conversation.`, members })
             io.emit("rooms", { rooms: get_rooms() })
         }
     })
