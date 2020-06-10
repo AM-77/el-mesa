@@ -24,7 +24,8 @@ export default class Room extends Component {
             members: [],
             error: "",
             redirect: false,
-            writters: []
+            writters: [],
+            isOpen: false
         }
         this.socket = io(ENDPOINT)
     }
@@ -77,9 +78,11 @@ export default class Room extends Component {
         this.setState({ redirect: true })
     }
 
+    toggleNabBar = () => this.setState((state)=>({isOpen: !state.isOpen}))
+
     render() {
 
-        const { redirect, error, name, room, messages, members, writters, message } = this.state
+        const { redirect, error, name, room, messages, members, writters, message, isOpen } = this.state
 
         if (redirect)
             return <Redirect to={{
@@ -89,9 +92,9 @@ export default class Room extends Component {
         else
             return (
                 <div className="room-container">
-                    <div className="room-sidebar"><Members me={name} members={members} /></div>
-                    <div className="room-content">
-                        <NavBar logout={this.logout} room={room}/>
+                    <div className={`room-sidebar ${isOpen && 'open'}`}><Members me={name} members={members} /></div>
+                    <div className={`room-content ${isOpen && 'open'}`}>
+                        <NavBar logout={this.logout} room={room} isOpen={isOpen} toggleNabBar={this.toggleNabBar} />
                         <div className="chat-messages">
                             <div className="messages"><Messages me={name} messages={messages} /></div>
                             <Writters writters={writters} name={name} />
