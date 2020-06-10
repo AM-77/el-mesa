@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 export default class Rooms extends Component {
     render() {
-        const { rooms, selectRoom } = this.props
+        const { rooms, selectRoom, isOpen } = this.props
         return (
-            <div className="rooms-container">
+            <div className={`rooms-container ${isOpen && 'open'}`}>
                 <h2>Chat Rooms</h2>
                 {
                     rooms.length > 0 ?
