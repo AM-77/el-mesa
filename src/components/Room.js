@@ -42,7 +42,7 @@ export default class Room extends Component {
         this.socket.on("message", ({ user, text, members }) => {
             this.setState({ messages: [...this.state.messages, { user, text }] })
             if (members)
-                this.setState({ members })
+            this.setState({ members })
         })
 
         this.socket.on("writters", ({ writters }) => {
@@ -55,6 +55,25 @@ export default class Room extends Component {
     messageOnChange = message => { this.setState({ message }) }
 
     messageOnKeyPress = (key) => { (key === "Enter") && this.send() }
+
+    onImageUpload = (e) => {
+        const image = e.target.files[0]
+        if (image) this.uploadImage(image, this.sendImage)
+    }
+    
+    uploadImage = (file, sendImage ) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = function() { 
+            if (reader.result) sendImage(reader.result.toString())
+        }
+    }
+    
+    sendImage = (image) => {
+        if (image !== "") {
+            this.socket.emit("send-message", image, () => { })
+        }
+    }
 
     send = () => {
         let { message } = this.state
@@ -105,6 +124,7 @@ export default class Room extends Component {
                                 stoppedWritting={this.stoppedWritting}
                                 messageOnChange={this.messageOnChange}
                                 messageOnKeyPress={this.messageOnKeyPress}
+                                onImageUpload={this.onImageUpload}
                             />
                         </div>
                     </div>
