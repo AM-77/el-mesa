@@ -10,6 +10,18 @@
   --red: #C62828;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+  background-color: var(--faded-black)
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: var(--dark);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -387,7 +399,7 @@
   padding: 0 10px;
 }
 
-.chat-messages .sending-box input {
+.chat-messages .sending-box input.message-input {
   width: 100%;
   border: none;
   outline: none;
@@ -399,26 +411,59 @@
   color: var(--dark)
 }
 
-.chat-messages .sending-box button.emoji,
-.chat-messages .sending-box button.send {
+.chat-messages .sending-box .buttons {
+  display: flex;
+  width: 100px;
+
+}
+
+.chat-messages .sending-box .buttons button.emoji,
+.chat-messages .sending-box .buttons button.send,
+.chat-messages .sending-box .buttons .button.upload {
   border: none;
   outline: none;
   background: none;
   font-weight: 700;
   font-size: 14px;
-  cursor: pointer;
   position: relative;
-  color: var(--dark)
+  color: var(--dark);
+  width: 45px;
 }
 
-.chat-messages .sending-box button.emoji {
+.chat-messages .sending-box .buttons button.send {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.chat-messages .sending-box .buttons .button.upload {
+  position: relative;
+  overflow: hidden;
   padding: 10px;
 }
 
-.chat-messages .sending-box button.send:after {
+.chat-messages .sending-box .buttons .button.upload input {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  overflow: hidden;
+  width: 26px;
+  height: 26px;
+  opacity: 0;
+}
+
+.chat-messages .sending-box .buttons .button.upload input::-webkit-file-upload-button { 
+    height: 100%;
+    cursor: pointer; 
+}
+
+.chat-messages .sending-box .buttons button.emoji {
+  padding: 30px;
+}
+
+.chat-messages .sending-box .buttons button.send:after {
   position: absolute;
   bottom: 14px;
-  left: 0;
+  left: 8px;
   content: '';
   width: 0%;
   height: 2px;
@@ -426,8 +471,8 @@
   transition: all 150ms ease;
 }
 
-.chat-messages .sending-box button.send:hover:after {
-  width: 100%;
+.chat-messages .sending-box .buttons button.send:hover:after {
+  width: 30px;
 }
 
 .chat-messages .messages-container {
@@ -500,6 +545,21 @@
 .chat-messages .message-container .message p.content {
   height: fit-content;
   max-width: 70%;
+  overflow-wrap: break-word;
+  background: var(--faded-black);
+  color: var(--dark);
+  padding: 7px 10px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  border-radius: 5px;
+}
+
+.chat-messages .message-container .message img.image {
+  height: -moz-fit-content;
+  height: fit-content;
+  max-width: 220px;
+  height: auto;
   overflow-wrap: break-word;
   background: var(--faded-black);
   color: var(--dark);
