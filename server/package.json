@@ -1,7 +1,7 @@
 {
   "name": "el-mesa-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "el-mesa server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
