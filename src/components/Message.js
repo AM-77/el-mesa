@@ -9,7 +9,7 @@ export default class Message extends Component {
         if ( user !== "admin" && text.indexOf('data:image/') === -1 ) {
             message =  <p className="content">{ReactEmoji.emojify(text)}</p>
         }else {
-            message = <img className="image" src={text} alt="recieved image" />
+            message = <img className="image" src={text} alt="recieved" />
         }
 
         return (
