@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/AM-77/el-mesa/blob/master/LICENSE">
-  <img src="https://img.shields.io/github/license/am-77/lel-mesa?color=%23212121&logoColor=%23212121" alt="MIT License" />
+  <img src="https://img.shields.io/github/license/am-77/el-mesa?color=%23212121&logoColor=%23212121" alt="MIT License" />
   </a>
 
   <img src="https://img.shields.io/badge/Open%20Source-%E2%99%A5-%23212121" />
