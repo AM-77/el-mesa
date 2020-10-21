@@ -13,6 +13,15 @@
 
 > This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Built With:
+  
+  - [react](https://reactjs.org): An open-source, front end, JavaScript library for building user interfaces.
+  - [socket.io-client](https://github.com/socketio/socket.io-client): An open-source, realtime application framework (client)
+  
+## Deployed with:
+
+  - [netlify](https://www.netlify.com): A cloud computing company that offers hosting services for web applications and static websites
+
 ## Developement:
 
 - clone the repo:
