@@ -1,52 +1,59 @@
-import React, { Component } from 'react'
-// import 'emoji-mart/css/emoji-mart.css'
-// import { Picker, Emoji } from 'emoji-mart'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Input extends Component {
-
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      hideEmojis: true
-    }
+      hideEmojis: true,
+    };
   }
 
   toggleEmojis = () => {
     this.setState((state) => ({
-      hideEmojis: !state.hideEmojis
-    }))
-  }
+      hideEmojis: !state.hideEmojis,
+    }));
+  };
 
   render() {
-    const { message, send, isWritting, stoppedWritting, messageOnChange, messageOnKeyPress, onImageUpload } = this.props
-    // const { hideEmojis } = this.state
+    const {
+      message,
+      send,
+      isWritting,
+      stoppedWritting,
+      messageOnChange,
+      messageOnKeyPress,
+      onImageUpload,
+    } = this.props;
     return (
       <div className="sending-box">
-          {/* <div className={`emojis ${hideEmojis && 'hide'}`}>
-            <Picker set={'facebook'} onSelect={emoji =>  messageOnChange(message + emoji.emoticons[0])} showPreview={false} showSkinTones={false} useButton={false} />
-          </div> */}
-          <input 
-              className="message-input"
-              type="text" 
-              value={message}
-              placeholder="Your Message"
-              onChange={(e) => messageOnChange(e.target.value)}
-              onKeyPress={(e) => messageOnKeyPress(e.key)}
-              onFocus={isWritting}
-              onBlur={stoppedWritting} />
-          
-          {/* <button className="emoji" onClick={this.toggleEmojis}><Emoji set={'facebook'} emoji={'smile'} size={24} /></button> */}
+        <input
+          className="message-input"
+          type="text"
+          value={message}
+          placeholder="Your Message"
+          onChange={(e) => messageOnChange(e.target.value)}
+          onKeyPress={(e) => messageOnKeyPress(e.key)}
+          onFocus={isWritting}
+          onBlur={stoppedWritting}
+        />
 
-          <div className="buttons">
-            <div  className='button upload'>
-              <input type='file' onChange={onImageUpload} title='select an image' accept="image/*" />
-              <label>
-                <svg viewBox="0 0 419.2 419.2">
+        <div className="buttons">
+          <div className="button upload">
+            <input
+              type="file"
+              onChange={onImageUpload}
+              title="select an image"
+              accept="image/*"
+            />
+            <label>
+              <svg viewBox="0 0 419.2 419.2">
+                <g>
                   <g>
                     <g>
-                      <g>
-                        <circle cx="158" cy="144.4" r="28.8"/>
-                        <path d="M394.4,250.4c-13.6-12.8-30.8-21.2-49.6-23.6V80.4c0-15.6-6.4-29.6-16.4-40C318,30,304,24,288.4,24h-232
+                      <circle cx="158" cy="144.4" r="28.8" />
+                      <path
+                        d="M394.4,250.4c-13.6-12.8-30.8-21.2-49.6-23.6V80.4c0-15.6-6.4-29.6-16.4-40C318,30,304,24,288.4,24h-232
                           c-15.6,0-29.6,6.4-40,16.4C6,50.8,0,64.8,0,80.4v184.4V282v37.2c0,15.6,6.4,29.6,16.4,40c10.4,10.4,24.4,16.4,40,16.4h224.4
                           c14.8,12,33.2,19.6,53.6,19.6c23.6,0,44.8-9.6,60-24.8c15.2-15.2,24.8-36.4,24.8-60C419.2,286.8,409.6,265.6,394.4,250.4z
                           M21.2,80.4c0-9.6,4-18.4,10.4-24.4c6.4-6.4,15.2-10.4,24.8-10.4h232c9.6,0,18.4,4,24.8,10.4c6.4,6.4,10.4,15.2,10.4,24.8v124.8
@@ -58,19 +65,34 @@ export default class Input extends Component {
                           c-11.6,11.6-27.2,18.4-44.8,18.4c-16.8,0-32.4-6.8-43.6-17.6c-1.6-1.6-3.2-3.6-4.8-5.2c-1.2-1.2-2.4-2.8-3.6-4
                           c-1.6-2-2.8-4.4-4-6.8c-0.8-1.6-1.6-2.8-2.4-4.4c-0.8-2-1.6-4.4-2-6.8c-0.4-1.6-1.2-3.6-1.6-5.2c-0.8-4-1.2-8.4-1.2-12.8
                           c0-17.6,7.2-33.2,18.4-44.8c11.2-11.6,27.2-18.4,44.8-18.4s33.2,7.2,44.8,18.4c11.6,11.6,18.4,27.2,18.4,44.8
-                          C397.2,328,390,343.6,378.8,355.2z"/>
-                        <path d="M341.6,267.6c-0.8-0.8-2-1.6-3.6-2.4c-1.2-0.4-2.4-0.8-3.6-0.8c-0.4,0-0.4,0-0.4,0c-0.4,0-0.4,0-0.4,0
+                          C397.2,328,390,343.6,378.8,355.2z"
+                      />
+                      <path
+                        d="M341.6,267.6c-0.8-0.8-2-1.6-3.6-2.4c-1.2-0.4-2.4-0.8-3.6-0.8c-0.4,0-0.4,0-0.4,0c-0.4,0-0.4,0-0.4,0
                           c-1.2,0-2.4,0.4-3.6,0.8c-1.2,0.4-2.4,1.2-3.6,2.4l-24.8,24.8c-4,4-4,10.8,0,15.2c4,4,10.8,4,15.2,0l6.4-6.4v44
-                          c0,6,4.8,10.8,10.8,10.8s10.8-4.8,10.8-10.8v-44l6.4,6.4c4,4,10.8,4,15.2,0c4-4,4-10.8,0-15.2L341.6,267.6z"/>
-                      </g>
+                          c0,6,4.8,10.8,10.8,10.8s10.8-4.8,10.8-10.8v-44l6.4,6.4c4,4,10.8,4,15.2,0c4-4,4-10.8,0-15.2L341.6,267.6z"
+                      />
                     </g>
                   </g>
-                </svg>
-              </label>
-            </div>
-            <button className="send" onClick={send}>send</button>
+                </g>
+              </svg>
+            </label>
           </div>
+          <button type="button" className="send" onClick={send}>
+            send
+          </button>
+        </div>
       </div>
-    )
+    );
   }
 }
+
+Input.propTypes = {
+  message: PropTypes.string.isRequired,
+  send: PropTypes.func.isRequired,
+  isWritting: PropTypes.func.isRequired,
+  stoppedWritting: PropTypes.func.isRequired,
+  messageOnChange: PropTypes.func.isRequired,
+  messageOnKeyPress: PropTypes.func.isRequired,
+  onImageUpload: PropTypes.func.isRequired,
+};

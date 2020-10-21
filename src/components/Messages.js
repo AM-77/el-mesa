@@ -1,15 +1,27 @@
-import React, { Component } from "react"
-import ScrollToBottom from "react-scroll-to-bottom"
-import Message from "./Message"
+import React from 'react';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import PropTypes from 'prop-types';
 
-export default class Messages extends Component {
-    render() {
-        return (
-            <div className="messages-container">
-                <ScrollToBottom className="scroll-to-bottom">
-                    {this.props.messages.map((message, index) => <Message me={this.props.me} key={index} msg={message} />)}
-                </ScrollToBottom>
-            </div>
-        )
-    }
+import Message from './Message';
+
+export default function Messages({ messages, me }) {
+  return (
+    <div className="messages-container">
+      <ScrollToBottom className="scroll-to-bottom">
+        {messages.map((message, index) => (
+          <Message me={me} key={index} msg={message} />
+        ))}
+      </ScrollToBottom>
+    </div>
+  );
 }
+
+Messages.propTypes = {
+  me: PropTypes.string.isRequired,
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      user: PropTypes.string,
+    })
+  ).isRequired,
+};
