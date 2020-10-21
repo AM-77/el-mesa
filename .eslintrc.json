@@ -1,0 +1,33 @@
+{
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/require-default-props": 0,
+    "react/no-array-index-key": 0,
+    "jsx-a11y/label-has-associated-control": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
